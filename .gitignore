@@ -1,0 +1,16 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Secrets / local configuration (commit only .env.example)
+.env
+
+# Model artifacts (produced by the DVC pipeline / Docker build)
+artifacts/
+*.joblib
+
+# Tooling and OS
+.pytest_cache/
+.DS_Store
+.vscode/
