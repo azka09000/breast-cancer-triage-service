@@ -14,7 +14,9 @@ models:
   logistic_regression:
     C: 1.0
     max_iter: 2000
+    class_weight: balanced
   random_forest:
     n_estimators: 200
     max_depth: 8
     min_samples_leaf: 1
+    class_weight: balanced
