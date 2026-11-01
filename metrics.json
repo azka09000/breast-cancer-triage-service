@@ -1,0 +1,39 @@
+{
+  "selected_model": "logistic_regression",
+  "test": {
+    "malignant_recall": 0.9756,
+    "accuracy": 0.9722,
+    "roc_auc": 0.9956
+  },
+  "cv": {
+    "malignant_recall": 0.9515,
+    "accuracy": 0.9699,
+    "roc_auc": 0.9905
+  },
+  "candidates": {
+    "logistic_regression": {
+      "cv": {
+        "malignant_recall": 0.9515,
+        "accuracy": 0.9699,
+        "roc_auc": 0.9905
+      },
+      "test": {
+        "malignant_recall": 0.9756,
+        "accuracy": 0.9722,
+        "roc_auc": 0.9956
+      }
+    },
+    "random_forest": {
+      "cv": {
+        "malignant_recall": 0.9394,
+        "accuracy": 0.9559,
+        "roc_auc": 0.9876
+      },
+      "test": {
+        "malignant_recall": 0.9024,
+        "accuracy": 0.9444,
+        "roc_auc": 0.9909
+      }
+    }
+  }
+}
