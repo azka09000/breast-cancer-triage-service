@@ -1,0 +1,20 @@
+seed: 42
+
+data:
+  path: data/raw/breast_cancer.csv
+  test_size: 0.2
+
+cv:
+  folds: 5
+
+selection:
+  min_test_malignant_recall: 0.95
+
+models:
+  logistic_regression:
+    C: 1.0
+    max_iter: 2000
+  random_forest:
+    n_estimators: 200
+    max_depth: 8
+    min_samples_leaf: 1
