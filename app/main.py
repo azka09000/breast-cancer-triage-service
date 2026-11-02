@@ -1,4 +1,4 @@
-"""FastAPI service for breast-cancer triage predictions."""
+"""FastAPI service for breast-cancer triage predictions (Meridian Diagnostics Lab)."""
 import logging
 import sys
 from contextlib import asynccontextmanager
