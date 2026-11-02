@@ -1,0 +1,27 @@
+# Local environments and tooling
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.vscode/
+.DS_Store
+
+# Version control and DVC internals (the dataset itself is NOT excluded)
+.git/
+.dvc/
+dvc-remote/
+*.dvc
+
+# Locally produced artifacts: the image trains its own model
+artifacts/
+metrics.json
+
+# Secrets and configuration
+.env
+.env.*
+
+# Docker and docs files are not needed inside the image
+Dockerfile*
+docker-compose*.yml
+README.md
+sample_payload.json
