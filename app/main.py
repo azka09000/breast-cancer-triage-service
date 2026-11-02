@@ -48,7 +48,7 @@ def current_model_version(service: ModelService) -> str:
     return settings.model_version or service.card.get("model_version", "unknown")
 
 
-app = FastAPI(title="Breast Cancer Triage API", lifespan=lifespan)
+app = FastAPI(title="Breast Cancer Triage API (Meridian Diagnostics Lab)", lifespan=lifespan)
 
 
 @app.get("/health")
