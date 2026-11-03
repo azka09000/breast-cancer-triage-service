@@ -7,6 +7,7 @@ import sklearn
 from fastapi import FastAPI
 
 from app.config import load_settings
+from app.counter import PredictionCounter
 from app.model import ModelService
 from app.schemas import FEATURE_NAMES, PatientFeatures, PredictionResponse
 
@@ -35,11 +36,17 @@ async def lifespan(app: FastAPI):
         logger.critical("Cannot start the service: %s", exc)
         raise
     state["model"] = service
+    state["counter"] = PredictionCounter(settings.redis_host, settings.redis_port)
     logger.info(
         "Loaded %s model (version %s) from %s, decision threshold %.2f",
         service.card.get("model_family"), current_model_version(service),
         settings.model_path, settings.decision_threshold,
     )
+    if settings.redis_host:
+        logger.info("Request counting enabled (Redis at %s:%s)",
+                    settings.redis_host, settings.redis_port)
+    else:
+        logger.info("Request counting disabled (REDIS_HOST not set)")
     yield
     state.clear()
 
@@ -61,7 +68,9 @@ def predict(features: PatientFeatures):
     service = state["model"]
     probability = service.malignant_probability(features.model_dump())
     label = "malignant" if probability >= settings.decision_threshold else "benign"
-    logger.info("prediction label=%s malignant_probability=%.4f", label, probability)
+    count = state["counter"].increment()
+    logger.info("prediction label=%s malignant_probability=%.4f count=%s",
+                label, probability, count)
     return PredictionResponse(
         label=label,
         malignant_probability=round(probability, 4),
@@ -88,5 +97,10 @@ def model_info():
 
 @app.get("/stats")
 def stats():
-    return {"predictions_served": None, "counter_enabled": False,
-            "note": "Redis request counter is added in Milestone 4"}
+    counter = state["counter"]
+    value = counter.current()
+    return {
+        "predictions_served": value,
+        "counter_enabled": counter.enabled,
+        "redis_reachable": counter.enabled and value is not None,
+    }
